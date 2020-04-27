@@ -82,4 +82,3 @@ Please open issues or PRs to discuss whatever you think that will make this tool
 # Roadmap
 
 - add SSL support for http and ws
-- allow more customization of the ApolloClient
