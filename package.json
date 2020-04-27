@@ -14,7 +14,7 @@
     "start": "tsdx watch",
     "build": "tsdx build",
     "test": "tsdx test --passWithNoTests",
-    "lint": "tsdx lint",
+    "lint": "eslint src --ext .ts --ext .tsx",
     "prepare": "tsdx build"
   },
   "peerDependencies": {
@@ -22,7 +22,7 @@
   },
   "husky": {
     "hooks": {
-      "pre-commit": "tsdx lint"
+      "pre-commit": "yarn lint"
     }
   },
   "prettier": {
@@ -63,6 +63,7 @@
     "apollo-link-http": "^1.5.17",
     "apollo-link-ws": "^1.0.20",
     "apollo-utilities": "^1.3.3",
+    "graphql": "^15.0.0",
     "isomorphic-unfetch": "^3.0.0",
     "next-with-apollo": "^5.0.1"
   }

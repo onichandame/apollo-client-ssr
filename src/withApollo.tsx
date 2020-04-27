@@ -20,16 +20,19 @@ type Props =
 }
 | {
   url?: undefined;
+  wsUrl?: string;
   httpUrl: string;
-  wsUrl: string;
 }
 
-export const withApollo = ({ url, httpUrl, wsUrl }: Props, component: Parameters<ReturnType<typeof nextWithApollo>>[0]): ReturnType<ReturnType<typeof nextWithApollo>> => {
-  if (!(httpUrl && wsUrl) && url) {
-    httpUrl = `http://${url}`
+export const withApollo = (component: Parameters<ReturnType<typeof nextWithApollo>>[0], { url, httpUrl, wsUrl }: Props): ReturnType<ReturnType<typeof nextWithApollo>> => {
+  if (!wsUrl) {
     wsUrl = `ws://${url}`
-  } else {
-    throw new Error('either url or httpUrl and wsUrl must be provided to make apollo connection')
+  }
+  if (!httpUrl) {
+    httpUrl = `http://${url}`
+  }
+  if (!httpUrl) {
+    throw new Error('either url or httpUrl must be provided to make an apollo connection')
   }
 
   const ssrMode = !process.browser
@@ -40,12 +43,14 @@ export const withApollo = ({ url, httpUrl, wsUrl }: Props, component: Parameters
     fetch
   })
   let link = httpLink
-  if (!ssrMode) {
+  if (!ssrMode && wsUrl) {
     const wsLink = new WebSocketLink({
       uri: wsUrl,
       options: {
         reconnect: true
       },
+      // eslint not seeing WebSocket definition in typescript package. need to fix eslint rules
+      // eslint-disable-next-line no-undef
       webSocketImpl: WebSocket
     })
     link = split(
@@ -64,7 +69,7 @@ export const withApollo = ({ url, httpUrl, wsUrl }: Props, component: Parameters
         link,
         ssrMode,
         connectToDevTools: !ssrMode,
-        // type is somehow lost. need to fix it
+        // type is somehow lost here. need to fix it
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
         cache: new InMemoryCache().restore(initialState as any || {})
       })
