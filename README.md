@@ -83,4 +83,3 @@ Please open issues or PRs to discuss whatever you think that will make this tool
 
 - add SSL support for http and ws
 - allow more customization of the ApolloClient
-- allow different options for query and subscription
