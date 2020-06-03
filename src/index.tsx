@@ -1,1 +1,1 @@
-export * from './withApollo'
+export * from "./withApollo"
