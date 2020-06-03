@@ -18,6 +18,7 @@
     "prepare": "tsdx build"
   },
   "peerDependencies": {
+    "@apollo/react-hooks": "^3.1.5",
     "react": ">=16"
   },
   "husky": {
@@ -42,7 +43,6 @@
     "prettier-eslint": "9.0.1"
   },
   "dependencies": {
-    "@apollo/react-hooks": "^3.1.5",
     "@apollo/react-ssr": "^3.1.5",
     "apollo-cache-inmemory": "^1.6.5",
     "apollo-client": "^2.6.8",
