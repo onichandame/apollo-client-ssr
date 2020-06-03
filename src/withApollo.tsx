@@ -13,18 +13,36 @@ import { InMemoryCache } from 'apollo-cache-inmemory'
 import fetch from 'isomorphic-unfetch'
 
 type Props =
-| {
-  url: string;
-  httpUrl?: undefined;
-  wsUrl?: undefined;
-}
-| {
-  url?: undefined;
-  wsUrl?: string;
-  httpUrl: string;
-}
+  | {
+      url: string;
+      httpUrl?: undefined;
+      wsUrl?: undefined;
+    }
+  | {
+      url?: undefined;
+      wsUrl?: string;
+      httpUrl: string;
+    };
 
-export const withApollo = (component: Parameters<ReturnType<typeof nextWithApollo>>[0], { url, httpUrl, wsUrl }: Props): ReturnType<ReturnType<typeof nextWithApollo>> => {
+const completeUrl = (raw: string | undefined) =>
+  raw
+    ? raw[0] === '/'
+      ? process.browser
+        ? window.location.host + '/' + raw
+        : 'localhost/' + raw
+      : raw
+    : raw
+
+export const withApollo = (
+  component: Parameters<ReturnType<typeof nextWithApollo>>[0],
+  { url, httpUrl, wsUrl }: Props
+): ReturnType<ReturnType<typeof nextWithApollo>> => {
+  const ssrMode = !process.browser
+
+  wsUrl = completeUrl(wsUrl)
+  httpUrl = completeUrl(httpUrl)
+  url = completeUrl(url)
+
   if (!wsUrl) {
     wsUrl = `ws://${url}`
   }
@@ -32,10 +50,10 @@ export const withApollo = (component: Parameters<ReturnType<typeof nextWithApoll
     httpUrl = `http://${url}`
   }
   if (!httpUrl) {
-    throw new Error('either url or httpUrl must be provided to make an apollo connection')
+    throw new Error(
+      'either url or httpUrl must be provided to make an apollo connection'
+    )
   }
-
-  const ssrMode = !process.browser
 
   const httpLink: ApolloLink = new HttpLink({
     uri: httpUrl,
@@ -55,8 +73,10 @@ export const withApollo = (component: Parameters<ReturnType<typeof nextWithApoll
     })
     link = split(
       ({ query }) => {
-        const def = getMainDefinition((query))
-        return def.kind === 'OperationDefinition' && def.operation === 'subscription'
+        const def = getMainDefinition(query)
+        return (
+          def.kind === 'OperationDefinition' && def.operation === 'subscription'
+        )
       },
       wsLink,
       httpLink
@@ -71,13 +91,13 @@ export const withApollo = (component: Parameters<ReturnType<typeof nextWithApoll
         connectToDevTools: !ssrMode,
         // type is somehow lost here. need to fix it
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        cache: new InMemoryCache().restore(initialState as any || {})
+        cache: new InMemoryCache().restore((initialState as any) || {})
       })
     },
     {
       render: ({ Page, props }) => (
         <ApolloProvider client={props.apollo}>
-          <Page {...props}/>
+          <Page {...props} />
         </ApolloProvider>
       )
     }
