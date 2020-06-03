@@ -26,12 +26,6 @@
       "pre-push": "yarn build"
     }
   },
-  "prettier": {
-    "printWidth": 80,
-    "semi": true,
-    "singleQuote": true,
-    "trailingComma": "es5"
-  },
   "name": "apollo-client-ssr",
   "author": "onichandame",
   "module": "dist/apollo-client-ssr.esm.js",
