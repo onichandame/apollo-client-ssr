@@ -1,1 +1,1 @@
-export { useMutation } from '@apollo/react-hooks';
+export { useMutation } from "@apollo/react-hooks"

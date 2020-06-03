@@ -1,41 +1,41 @@
 /* eslint-disable react/display-name */
 /* eslint-disable react/prop-types */
-import React from 'react'
-import { getDataFromTree } from '@apollo/react-ssr'
-import nextWithApollo from 'next-with-apollo'
-import { ApolloProvider } from '@apollo/react-hooks'
-import { ApolloLink, split } from 'apollo-link'
-import { HttpLink } from 'apollo-link-http'
-import { WebSocketLink } from 'apollo-link-ws'
-import { getMainDefinition } from 'apollo-utilities'
-import { ApolloClient } from 'apollo-client'
-import { InMemoryCache } from 'apollo-cache-inmemory'
-import fetch from 'isomorphic-unfetch'
+import React from "react"
+import { getDataFromTree } from "@apollo/react-ssr"
+import nextWithApollo from "next-with-apollo"
+import { ApolloProvider } from "@apollo/react-hooks"
+import { ApolloLink, split } from "apollo-link"
+import { HttpLink } from "apollo-link-http"
+import { WebSocketLink } from "apollo-link-ws"
+import { getMainDefinition } from "apollo-utilities"
+import { ApolloClient } from "apollo-client"
+import { InMemoryCache } from "apollo-cache-inmemory"
+import fetch from "isomorphic-unfetch"
 
 type CommonProps = {
   // graphql port for ssr
-  localPort?: number;
-  subscription?: boolean;
+  localPort?: number
+  subscription?: boolean
 }
 
 type Props =
   | ({
-      url: string;
-      httpUrl?: undefined;
-      wsUrl?: undefined;
+      url: string
+      httpUrl?: undefined
+      wsUrl?: undefined
     } & CommonProps)
   | ({
-      url?: undefined;
-      wsUrl?: string;
-      httpUrl: string;
+      url?: undefined
+      wsUrl?: string
+      httpUrl: string
     } & CommonProps)
 
 const completeUrl = (raw: string | undefined, localPort?: number) =>
   raw
-    ? raw[0] === '/'
+    ? raw[0] === "/"
       ? process.browser
         ? window.location.host + raw
-        : `localhost${localPort ? `:${localPort}` : ''}` + raw
+        : `localhost${localPort ? `:${localPort}` : ""}` + raw
       : raw
     : raw
 
@@ -57,13 +57,13 @@ export const withApollo = (
   }
   if (!httpUrl) {
     throw new Error(
-      'either url or httpUrl must be provided to make an apollo connection'
+      "either url or httpUrl must be provided to make an apollo connection"
     )
   }
 
   const httpLink: ApolloLink = new HttpLink({
     uri: httpUrl,
-    credentials: 'same-origin',
+    credentials: "same-origin",
     fetch
   })
   let link = httpLink
@@ -81,7 +81,7 @@ export const withApollo = (
       ({ query }) => {
         const def = getMainDefinition(query)
         return (
-          def.kind === 'OperationDefinition' && def.operation === 'subscription'
+          def.kind === "OperationDefinition" && def.operation === "subscription"
         )
       },
       wsLink,

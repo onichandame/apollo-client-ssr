@@ -1,1 +1,1 @@
-export { useQuery } from '@apollo/react-hooks';
+export { useQuery } from "@apollo/react-hooks"

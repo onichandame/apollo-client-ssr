@@ -1,5 +1,5 @@
 declare namespace NodeJS {
   interface Process {
-    readonly browser: boolean;
+    readonly browser: boolean
   }
 }
