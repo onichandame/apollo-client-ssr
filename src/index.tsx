@@ -1,7 +1,7 @@
-export * from './withApollo'
+export * from "./withApollo"
 export {
   useQuery,
   useMutation,
   useLazyQuery,
   useSubscription
-} from '@apollo/react-hooks'
+} from "@apollo/react-hooks"
