@@ -14,7 +14,7 @@ This is a thin wrapper around [next-with-apollo](https://www.npmjs.com/package/n
 import React, { FC } from 'react'
 import gql fromo 'graphql-tag'
 import { withApollo } from 'apollo-client-ssr'
-import { useQuery, useMutation, useSubscription } from '@apollo/react-hooks'
+import { useQuery, useMutation, useSubscription } from 'apollo-client-ssr'
 
 const QUERY = gql`
   query book($id: String!){
