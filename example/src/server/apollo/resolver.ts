@@ -1,17 +1,21 @@
-import { Field, Resolver, Query, ObjectType } from "type-graphql"
+import { Field, Resolver, Query, Mutation, ObjectType } from "type-graphql"
 
 @ObjectType()
-export class Test {
+export class Reply {
+  @Field({ nullable: false })
+  status!: "success" | "failed"
   @Field({ nullable: true })
-  date!: Date
-  @Field({ nullable: true })
-  string!: string
+  message?: string
 }
 
-@Resolver(() => Test)
+@Resolver(() => Reply)
 export class TestResolver {
-  @Query(() => Test)
+  @Query(() => Reply)
   async get() {
-    return { string: "hello", date: new Date() }
+    return { status: "success", message: "hello" } as Reply
+  }
+  @Mutation(() => Boolean)
+  async put() {
+    return { status: "success" } as Reply
   }
 }
