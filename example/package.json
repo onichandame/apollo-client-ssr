@@ -1,0 +1,68 @@
+{
+  "name": "nextjs-i18n-express-typescript",
+  "version": "0.0.0",
+  "author": "your name",
+  "main": "dist/server/index.js",
+  "private": false,
+  "scripts": {
+    "dev": "nodemon",
+    "build": "yarn build:clean && yarn build:server && next build",
+    "build:server": "tsc --project tsconfig.server.json",
+    "build:clean": "rimraf dist",
+    "start": "cross-env NODE_ENV=production node dist/server",
+    "test": "jest --passWithNoTests",
+    "format": "prettier -c \"src/**/*.{ts,tsx,js,jsx,json,md}\" --write"
+  },
+  "dependencies": {
+    "@apollo/react-hooks": "^3.1.5",
+    "@material-ui/core": "^4.9.11",
+    "@material-ui/icons": "^4.9.1",
+    "apollo-client-ssr": "^0.0.10",
+    "apollo-server-express": "^2.14.1",
+    "cross-env": "^7.0.2",
+    "express": "^4.17.1",
+    "graphql": "^15.0.0",
+    "graphql-tag": "^2.10.3",
+    "isomorphic-unfetch": "^3.0.0",
+    "next": "9.4.0",
+    "next-i18next": "^4.3.0",
+    "next-images": "^1.3.1",
+    "nodemon": "^2.0.3",
+    "randomstring": "^1.1.5",
+    "react": "^16.13.1",
+    "react-dom": "16.13.1",
+    "react-sysmode": "^0.0.1",
+    "reflect-metadata": "^0.1.13",
+    "subscriptions-transport-ws": "^0.9.16",
+    "type-graphql": "^1.0.0-rc.2",
+    "winston": "^3.2.1"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.8.7",
+    "@types/express": "^4.17.6",
+    "@types/jest": "^25.2.1",
+    "@types/randomstring": "^1.1.6",
+    "@types/react": "^16.9.34",
+    "awesome-typescript-loader": "^5.2.1",
+    "babel-loader": "^8.0.6",
+    "babel-plugin-styled-components": "^1.10.7",
+    "babel-preset-react-app": "^9.1.1",
+    "core-js": "3.6.5",
+    "husky": "^4.2.5",
+    "i": "^0.3.6",
+    "jest": "^26.0.1",
+    "npm": "^6.14.4",
+    "prettier": "^2.0.5",
+    "react-docgen-typescript-loader": "^3.7.1",
+    "rimraf": "^3.0.2",
+    "ts-loader": "^7.0.1",
+    "ts-node": "^8.8.2",
+    "typescript": "^3.8.3"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "yarn format",
+      "pre-push": "yarn test && yarn build"
+    }
+  }
+}

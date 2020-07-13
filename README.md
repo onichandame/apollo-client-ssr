@@ -12,7 +12,7 @@ This is a thin wrapper around [next-with-apollo](https://www.npmjs.com/package/n
 
 ```typescript
 import React, { FC } from 'react'
-import gql fromo 'graphql-tag'
+import gql from 'graphql-tag'
 import { withApollo } from 'apollo-client-ssr'
 import { useQuery, useMutation, useSubscription } from 'apollo-client-ssr'
 
