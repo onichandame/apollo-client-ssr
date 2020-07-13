@@ -13,7 +13,8 @@ This is a thin wrapper around [next-with-apollo](https://www.npmjs.com/package/n
 ```typescript
 import React, { FC } from 'react'
 import gql fromo 'graphql-tag'
-import { withApollo, useQuery, useMutation, useSubscription } from 'apollo-client-ssr'
+import { withApollo } from 'apollo-client-ssr'
+import { useQuery, useMutation, useSubscription } from '@apollo/react-hooks'
 
 const QUERY = gql`
   query book($id: String!){
