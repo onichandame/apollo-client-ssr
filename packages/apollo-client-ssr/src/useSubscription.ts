@@ -25,7 +25,7 @@ type Props<T = any, D = OperationVariables> = {
 
 export const useSubscription = <T>({
   query,
-  subscription,
+  subscription
 }: Props<T>): {
   loading: boolean
   error: ApolloError | undefined
@@ -43,13 +43,13 @@ export const useSubscription = <T>({
         updateQuery: (prev, { subscriptionData }) => {
           if (!subscriptionData.data) return prev
           else return subscriptionData.data
-        },
+        }
       }),
     [subscribeToMore]
   )
   return {
     loading,
     error,
-    data,
+    data
   }
 }
