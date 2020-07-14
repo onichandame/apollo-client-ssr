@@ -14,8 +14,6 @@ import {
 import { makeStyles, createStyles } from "@material-ui/core/styles"
 import { AccountCircle, Menu as MenuIcon } from "@material-ui/icons"
 
-import { i18n, useTranslation, withTranslation } from "../../i18n"
-
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     root: {
@@ -30,14 +28,7 @@ const useStyles = makeStyles((theme: Theme) =>
   })
 )
 
-export const Appbar = withTranslation("common")(() => {
-  let languages = i18n.languages
-  if (!languages || languages.length < 2) {
-    languages = ["en", "cn"]
-  }
-  const { t } = useTranslation()
-  const [lang, setLang] = useState<string>(i18n.language)
-
+export const Appbar = () => {
   const classes = useStyles()
   const [auth, setAuth] = useState(true)
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null)
@@ -45,11 +36,6 @@ export const Appbar = withTranslation("common")(() => {
 
   const handleAuth = (event: React.ChangeEvent<HTMLInputElement>): void => {
     setAuth(event.target.checked)
-  }
-
-  const handleLang = (event: React.ChangeEvent<HTMLInputElement>): void => {
-    setLang(event.target.checked ? languages[0] : languages[1])
-    i18n.changeLanguage(lang)
   }
 
   const handleMenu = (event: React.MouseEvent<HTMLElement>): void => {
@@ -74,18 +60,8 @@ export const Appbar = withTranslation("common")(() => {
             <MenuIcon />
           </IconButton>
           <Typography variant="h6" className={classes.title}>
-            {t("title")}
+            Example GraphQL
           </Typography>
-          <FormControlLabel
-            control={
-              <Switch
-                checked={lang === languages[0]}
-                onChange={handleLang}
-                aria-label="language switch"
-              />
-            }
-            label={i18n.language}
-          />
           <FormControlLabel
             control={
               <Switch
@@ -131,4 +107,4 @@ export const Appbar = withTranslation("common")(() => {
       </AppBar>
     </div>
   )
-})
+}

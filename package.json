@@ -1,55 +1,13 @@
 {
-  "version": "0.0.10",
-  "license": "MIT",
-  "main": "dist/index.js",
-  "typings": "dist/index.d.ts",
-  "files": [
-    "dist"
-  ],
-  "engines": {
-    "node": ">=10"
-  },
-  "scripts": {
-    "start": "tsdx watch",
-    "build": "tsdx build",
-    "test": "tsdx test --passWithNoTests",
-    "format": "prettier --write \"src/**/*.{ts,tsx,js,jsx,json,md}\"",
-    "lint": "yarn format",
-    "prepare": "tsdx build"
-  },
-  "peerDependencies": {
-    "@apollo/react-hooks": "^3.1.5",
-    "react": ">=16"
-  },
-  "husky": {
-    "hooks": {
-      "pre-commit": "yarn lint"
-    }
-  },
-  "name": "apollo-client-ssr",
-  "author": "onichandame",
-  "module": "dist/apollo-client-ssr.esm.js",
+  "private":true,
+  "name": "apollo-client-ssr-monorepo",
+  "workspaces":["packages/*"],
   "devDependencies": {
-    "@types/node": "^13.13.2",
-    "@types/react": "^16.9.34",
-    "@types/react-dom": "^16.9.6",
-    "husky": "^4.2.5",
-    "react": "^16.13.1",
-    "react-dom": "^16.13.1",
-    "tsdx": "^0.13.2",
-    "tslib": "^1.11.1",
-    "typescript": "^3.8.3"
+    "prettier": "^2.0.5"
   },
-  "dependencies": {
-    "@apollo/react-ssr": "^3.1.5",
-    "apollo-cache-inmemory": "^1.6.5",
-    "apollo-client": "^2.6.8",
-    "apollo-link": "^1.2.14",
-    "apollo-link-http": "^1.5.17",
-    "apollo-link-ws": "^1.0.20",
-    "apollo-utilities": "^1.3.3",
-    "graphql": "^15.3.0",
-    "isomorphic-unfetch": "^3.0.0",
-    "next-with-apollo": "^5.0.1"
+  "scripts":{
+    "dev":"yarn workspace example dev",
+    "build":"yarn workspace apollo-client-ssr build",
+    "publish":"yarn workspace apollo-client-ssr npm publish"
   }
 }

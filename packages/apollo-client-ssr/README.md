@@ -59,7 +59,7 @@ export const MutateAuthor = withApollo(Mutation, {
 })
 
 const Subscription: FC = () => {
-  const { data, loading } = useQuery<{book: {author: string}}>({
+  const { data, loading } = useSubscription<{book: {author: string}}>({
     query: [ QUERY, { variables: {id: '1'} }], // needed for the first render on the server side
     subscription: [ SUBSCRIPTION, { variables: {id: '1'} } ]
   })

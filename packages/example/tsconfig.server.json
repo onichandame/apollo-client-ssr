@@ -3,7 +3,7 @@
   "compilerOptions": {
     "outDir": "dist",
     "module": "commonjs",
-    "target": "es2017",
+    "target": "ES6",
     "isolatedModules": false,
     "noEmit": false
   },

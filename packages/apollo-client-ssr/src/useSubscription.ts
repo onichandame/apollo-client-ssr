@@ -4,44 +4,52 @@ import { DocumentNode } from "graphql"
 import { OperationVariables } from "@apollo/react-common"
 import { useQuery, QueryHookOptions } from "@apollo/react-hooks"
 
-type Options<T, D> = [DocumentNode, QueryHookOptions<T, D>]
+type Options<T, D> = {
+  schema: DocumentNode
+  options?: QueryHookOptions<T, D>
+}
 
 // need to simplify and refine types here
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 type Props<T = any, D = OperationVariables> = {
   query: Options<T, D>
-  subscription: [
-    DocumentNode,
-    {
-      variables: OperationVariables
-    }
-  ]
+  subscription: {
+    schema: DocumentNode
+    options?:
+      | {
+          variables: OperationVariables
+        }
+      | undefined
+  }
 }
 
 export const useSubscription = <T>({
   query,
-  subscription
+  subscription,
 }: Props<T>): {
   loading: boolean
   error: ApolloError | undefined
   data: T | undefined
 } => {
-  const { data, loading, error, subscribeToMore } = useQuery<T>(...query)
+  const { data, loading, error, subscribeToMore } = useQuery<T>(
+    query.schema,
+    query.options
+  )
   useEffect(
     () =>
       subscribeToMore({
-        document: subscription[0],
-        variables: subscription[1].variables,
+        document: subscription.schema,
+        ...subscription.options,
         updateQuery: (prev, { subscriptionData }) => {
           if (!subscriptionData.data) return prev
           else return subscriptionData.data
-        }
+        },
       }),
     [subscribeToMore]
   )
   return {
     loading,
     error,
-    data
+    data,
   }
 }
