@@ -80,6 +80,11 @@ MIT
 
 Please open issues or PRs to discuss whatever you think that will make this tool more convenient!
 
+# Known Issues
+
+1. `useSubscription` is not working for now. Even it is fixed, it would require an additional query of the same signature
+
 # Roadmap
 
 - add SSL support for http and ws
+- find a better solution to `useSubscription`
